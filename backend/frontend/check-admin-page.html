@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verification in Progress</title>
+    <!-- Include the Dark theme -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark/dark.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script> 
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;400;600&display=swap');
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", serif;
+            color: white;
+        }
+        body {
+            background-color: #250821;
+        }
+        .container{
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .hero{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <img src="./images/Double Ring@1x-2.6s-200px-200px.gif" alt="Loading animation">
+            <h1>Please wait while we are checking your information.</h1>
+        </div>
+    </div>
+    
+    <script>
+        const adminPass = "maktab28nodir";
+   
+        function checkUser() {
+            const storedPass = localStorage.getItem("adminPassword");
+            
+            if (storedPass === adminPass) {
+                window.location.href = "./dashboard.html";
+            } else {
+                Swal.fire(`Your information has not been verified. There are ${3-localStorage.getItem("count")} attempts left `)
+                .then(() => {
+                    window.location.href = "./index.html";
+                    if(!localStorage.getItem("count")){
+                        localStorage.setItem("count",1)
+                    } else{
+                        let count = 0
+                        count = localStorage.getItem("count")
+                        count = parseInt(count)+1
+                        localStorage.setItem("count",count)
+                    }
+
+                    if(localStorage.getItem("count")==3){
+                        localStorage.setItem("banned", true);
+                    }
+                });
+            }
+        }
+        
+   
+        setTimeout(checkUser, 2000);
+    </script>
+</body>
+</html>
